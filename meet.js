@@ -1,4 +1,21 @@
 const initialize = async function() {
+    const videoContainer = document.querySelector('.video-container');
+    const admitButton = document.querySelector('#btn-admit');
+    const closeButton = document.querySelector('#btn-close');
+
+    closeButton.addEventListener('click', function (event) {
+        videoContainer.replaceChildren();
+    });
+
+    admitButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        // videoContainer.innerHTML += renderUser(people[0]);
+
+        if (people.length > 0) {
+            videoContainer.appendChild( renderUserElement(people.shift()) );
+        }
+    })
+
     // los usuarios que llegaron a la meeting
     const people = [];
 
@@ -113,20 +130,3 @@ function renderUserElement(user) {
 }
 
 initialize();
-
-const videoContainer = document.querySelector('.video-container');
-const admitButton = document.querySelector('#btn-admit');
-const closeButton = document.querySelector('#btn-close');
-
-closeButton.addEventListener('click', function (event) {
-    videoContainer.replaceChildren();
-});
-
-admitButton.addEventListener('click', function (event) {
-    event.preventDefault();
-    // videoContainer.innerHTML += renderUser(people[0]);
-
-    if (people.length > 0) {
-        videoContainer.appendChild( renderUserElement(people.shift()) );
-    }
-})
