@@ -1,9 +1,35 @@
-const people = [
-    { username : "Cosme Fulanito", avatar_url : "https://i.pravatar.cc/80?img=13" },
-    { username : "Marge Simpsons", avatar_url : "https://i.pravatar.cc/80?img=14" },
-    { username : "Homero Simpsons", avatar_url : "https://i.pravatar.cc/80?img=15" },
-    { username : "Bart Simpsons", avatar_url : null },
-];
+const initialize = async function() {
+    // los usuarios que llegaron a la meeting
+    const people = [];
+
+    // los usuarios invitados que estamos esperando que lleguen
+    let participants = [];
+
+    const response = await fetch('http://127.0.0.1:5500/participants.json');
+    participants = await response.json();
+
+    setInterval(function () {
+        if (participants.length > 0) {
+            people.push(participants.shift());
+        }
+        
+        document.getElementById('people-list').innerHTML = renderParticipantsList(people);
+    }, 3000);
+}
+
+function renderParticipantsList(people) {
+    let items = ``;
+
+    for (let i = 0; i < people.length; i++) {
+        items += `<div class="list-group-item">${people[i].username}</div>`;
+    }
+
+    return `
+        <div class="list-group">
+            ${items}
+        </div>
+    `;
+}
 
 function renderUser(user) {
     let avatar;
@@ -85,6 +111,8 @@ function renderUserElement(user) {
 
     return userTile;
 }
+
+initialize();
 
 const videoContainer = document.querySelector('.video-container');
 const admitButton = document.querySelector('#btn-admit');
