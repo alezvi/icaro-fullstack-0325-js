@@ -5,7 +5,7 @@ const initialize = async function() {
     // los usuarios invitados que estamos esperando que lleguen
     let participants = [];
 
-    const response = await fetch('http://127.0.0.1:5500/participants.json');
+    const response = await fetch('/participants.json');
     participants = await response.json();
 
     setInterval(function () {
